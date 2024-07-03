@@ -6,7 +6,8 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import NullPool
 from typing import AsyncGenerator
-from ..tg-bot import (
+
+from ..tgbot.bot import (
     POSTGRES_DB,
     POSTGRES_USER,
     POSTGRES_PASSWORD,

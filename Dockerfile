@@ -8,4 +8,4 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-CMD alembic upgread head && python3 /tgbot/tg-bot/bot.py
+CMD alembic upgrade head && python3 /tgbot/tgbot/bot.py
