@@ -1,5 +1,7 @@
 sqlalchemy
-psycopg2
 python-dotenv
 aiogram
 asyncio
+alembic
+asyncpg
+httpx
