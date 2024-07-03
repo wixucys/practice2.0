@@ -36,11 +36,6 @@ async def get_contacts(message: Message):
     )
 
 
-@router.message(Command("getvacancies"))
-async def get_vacancies(message: Message):
-    await message.answer("Введите название региона для поиска доступных вакансий:")
-
-
 @router.message()
 async def echo(message: Message):
     await message.answer(
