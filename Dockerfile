@@ -1,4 +1,4 @@
-FROM python:3.10-bullseye
+FROM python:3.12-bullseye
 
 RUN mkdir /tgbot
 
@@ -8,4 +8,4 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-CMD /tgbot/tg-bot/bot.py
+CMD python3 /tgbot/tg-bot/bot.py

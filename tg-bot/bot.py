@@ -1,5 +1,4 @@
 import asyncio
-import logging
 import os
 
 from dotenv import load_dotenv
@@ -16,7 +15,6 @@ async def main():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)  # логирование помогает видеть действия бота
     # чтобы при выключении бота не выводилась ошибка, пишем конструкцию
     try:
         asyncio.run(main())

@@ -1,11 +1,5 @@
-fastapi
-uvicorn
 sqlalchemy
-aiosqlite
-pydantic
-alembic
 psycopg2
 python-dotenv
 aiogram
 asyncio
-# logging
