@@ -1,12 +1,12 @@
 from aiogram import Router
 from aiogram.types import CallbackQuery
-from tgbot.utils import (
+from utils import (
     get_params,
     prettify_vacancies,
     get_pagination_keyboard,
     remove_html_tags_except_b,
 )
-from tgbot.parser import search_vacancies  # type: ignore
+from parser import search_vacancies  # type: ignore
 
 cr = Router()
 

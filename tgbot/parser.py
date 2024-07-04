@@ -6,10 +6,23 @@ from aiohttp import ClientSession, TCPConnector
 async def get_region(city: str):
     connector = TCPConnector(ssl=False)
     async with ClientSession(connector=connector) as session:
-        regions = await session.get("https://api.hh.ru/areas")
-        regions = await regions.json()
-        city_id = [region["id"] for region in regions if region["name"] == city]
-        return city_id[0] if city_id else None
+        areas = await session.get("https://api.hh.ru/areas")
+        areas = await areas.json()
+        simple_areas = []
+        for country in areas:
+            if country['name'] == city:
+                return country['id']
+            simple_areas.append({"id": country["id"], "name": country["name"]})
+            if country.get("areas"):
+                for region in country["areas"]:
+                    if region['name'] == city:
+                        return region['id']
+                    simple_areas.append({"id": region["id"], "name": region["name"]})
+                    for city_ in region["areas"]:
+                        if city_['name'] == city:
+                            return city_['id']
+                        simple_areas.append({"id": city_["id"], "name": city_["name"]})
+
 
 
 async def get_vacancies_data(

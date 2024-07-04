@@ -1,8 +1,8 @@
 from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
-from tgbot.parser import search_vacancies  # type: ignore
-from tgbot.utils import (
+from parser import search_vacancies  # type: ignore
+from utils import (
     get_pagination_keyboard,
     get_params,
     prettify_vacancies,
