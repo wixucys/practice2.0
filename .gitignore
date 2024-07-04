@@ -7,3 +7,5 @@ server/
 tgbot/utils.py
 **/.DS_Store
 spec.txt
+alembic.ini
+__init__.py
