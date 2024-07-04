@@ -1,25 +1,19 @@
 import asyncio
-import os
-
-from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher
 from handlers.commands import router
 from handlers.vacancies import getvac
+from handlers.callback import cr
+from config import TOKEN
 
-load_dotenv()
-POSTGRES_DB = os.getenv("POSTGRES_DB")
-POSTGRES_USER = os.getenv("POSTGRES_USER")
-POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
-POSTGRES_PORT = os.getenv("POSTGRES_PORT")
-POSTGRES_HOST = os.getenv("POSTGRES_HOST")
-TOKEN = os.getenv("TOKEN")
+
+bot = Bot(token=TOKEN)
+dp = Dispatcher()
+dp.include_router(router)
+dp.include_router(getvac)
+dp.include_router(cr)
 
 
 async def main():
-    bot = Bot(token=TOKEN)
-    dp = Dispatcher()
-    dp.include_router(router)
-    dp.include_router(getvac)
     await dp.start_polling(bot)
 
 

@@ -1,17 +1,5 @@
-from db import Base
+from .db import Base
 from sqlalchemy import Column, Integer, String
-
-# vacancy = {
-#     "id": id,
-#     "name": item["name"],
-#     "city": item["area"]["name"],
-#     "experience": item["experience"]["name"],
-#     "employment": item["employment"]["name"],
-#     "requirement": item["snippet"]["requirement"],
-#     "responsibility": item["snippet"]["responsibility"],
-#     "salary": salary,
-#     "link": f"https://hh.ru/vacancy/{id}?from=applicant_recommended&hhtmFrom=main"
-# }
 
 class Vacancy(Base):
     __tablename__ = "vacancies"

@@ -1,9 +1,16 @@
-from ..tgbot.bot import POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_PORT, POSTGRES_HOST
 from sqlalchemy import engine_from_config, pool
 from logging.config import fileConfig
-from ..db.models import Base
+
+from tgbot.config import (
+    POSTGRES_DB,
+    POSTGRES_USER,
+    POSTGRES_PASSWORD,
+    POSTGRES_PORT,
+    POSTGRES_HOST,
+)
+from tgbot.db.models import Vacancy
+from tgbot.db.db import Base
 from alembic import context
-from ..db.models import Vacancy
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -16,7 +23,6 @@ config.set_section_option(section, "POSTGRES_PASSWORD", POSTGRES_PASSWORD)
 config.set_section_option(section, "POSTGRES_PORT", POSTGRES_PORT)
 config.set_section_option(section, "POSTGRES_HOST", POSTGRES_HOST)
 
-
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
 if config.config_file_name is not None:
@@ -26,9 +32,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-
 target_metadata = Base.metadata
-
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

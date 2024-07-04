@@ -5,3 +5,4 @@ __pycache__/
 .env
 server/
 tgbot/utils.py
+**/.DS_Store
