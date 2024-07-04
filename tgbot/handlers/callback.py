@@ -1,7 +1,7 @@
 from aiogram import Router
 from aiogram.types import CallbackQuery
 from utils import (
-    get_params,
+    get_text_params,
     prettify_vacancies,
     get_pagination_keyboard,
     remove_html_tags_except_b,
@@ -19,10 +19,12 @@ async def page_callback_handler(call: CallbackQuery):
         current_page_number = int(call.data.split("_")[2])
         # await call.message.answer(f"Страница {page_number}")
         text = call.message.text.split("\n\n")[0]
+        print(text)
         # Здесь должен быть ваш код для получения данных о вакансиях на запрошенной странице
         # Например, vacancies = await search_vacancies(page=page_number)
         # Для примера просто отправим номер страницы
-        params = get_params(text)
+        params = get_text_params(text)
+        print(params)
         vacancies = list(await search_vacancies(**params, page=current_page_number))
         prettify__vacancies = prettify_vacancies(vacancies)
         await call.message.edit_text(
