@@ -3,8 +3,6 @@
 **/venv/
 __pycache__/
 .env
-server/
-tgbot/utils.py
 **/.DS_Store
 spec.txt
 __init__.py
