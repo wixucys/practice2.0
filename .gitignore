@@ -9,3 +9,8 @@ tgbot/utils.py
 spec.txt
 alembic.ini
 __init__.py
+migrations/
+tgbot/__init__.py
+tgbot/.DS_Store
+tgbot/db/
+tgbot/handlers/__init__.py
