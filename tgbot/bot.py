@@ -3,7 +3,8 @@ import os
 
 from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher
-from handlers.handlers import router
+from handlers.commands import router
+from handlers.vacancies import getvac
 
 load_dotenv()
 POSTGRES_DB = os.getenv("POSTGRES_DB")
@@ -18,6 +19,7 @@ async def main():
     bot = Bot(token=TOKEN)
     dp = Dispatcher()
     dp.include_router(router)
+    dp.include_router(getvac)
     await dp.start_polling(bot)
 
 

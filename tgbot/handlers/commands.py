@@ -9,7 +9,8 @@ router = Router()
 @router.message(CommandStart())
 async def cmd_start(message: Message):
     await message.answer(
-        "Привет! Этот бот позволяет найти вакансии с помощью hh.ru API в выбранном регионе :)"
+        "Привет! Этот бот позволяет найти вакансии с сайта hh.ru :)"
+        "\n\nДля поиска вакансий введите /help и просмотрите формат."
     )
 
 
@@ -19,8 +20,10 @@ async def get_help(message: Message):
         "Список доступных команд:"
         "\n/start — Начать использование"
         "\n/contacts — Контакты для связи"
-        "\n/help — Доступные команды"
-        "\n/getvacancies — Получить вакансии в выбранном регионе"
+        "\n/help — Помощь"
+        "\n\nДля получения вакансий введите желаемую профессию в виде:"
+        "\nНазвание профессии, Регион, Зарплата в формате:"
+        "\n\n/get_vacancies программист, Москва, 100000"
     )
 
 
@@ -36,8 +39,8 @@ async def get_contacts(message: Message):
     )
 
 
-@router.message()
-async def echo(message: Message):
-    await message.answer(
-        "Неизвестная команда. Введите /help или откройте меню для просмотра доступных команд."
-    )
+# @router.message()
+# async def echo(message: Message):
+#     await message.answer(
+#         "Неизвестная команда. Введите /help или откройте меню для просмотра доступных команд."
+#     )
