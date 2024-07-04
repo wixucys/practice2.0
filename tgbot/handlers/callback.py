@@ -1,6 +1,6 @@
 from aiogram import Router
 from aiogram.types import CallbackQuery
-from ..utils import (
+from tgbot.utils import (
     get_params,
     prettify_vacancies,
     get_pagination_keyboard,

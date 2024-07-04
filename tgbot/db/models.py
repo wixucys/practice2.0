@@ -1,6 +1,7 @@
 from .db import Base
 from sqlalchemy import Column, Integer, String
 
+
 class Vacancy(Base):
     __tablename__ = "vacancies"
 
