@@ -6,3 +6,4 @@ __pycache__/
 server/
 tgbot/utils.py
 **/.DS_Store
+spec.txt
