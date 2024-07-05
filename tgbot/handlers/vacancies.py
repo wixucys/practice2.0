@@ -7,6 +7,9 @@ from utils import (
     get_params,
     prettify_vacancies,
     remove_html_tags_except_b,
+    add_vacancies,
+    get_vacancies_from_db,
+    get_max_pages_count,
 )
 
 
@@ -18,11 +21,15 @@ async def get_vacancies(message: Message):
     params = get_params(message.text)
     st = f'<b>{" ".join(params.values()) + f"\n\n"}</b>'
     vacancies = list(await search_vacancies(**params))
+    await add_vacancies(vacancies)
+    vacancies = await get_vacancies_from_db(**params, page=1, page_size=2)
+    pages = await get_max_pages_count(**params, page_size=2)
+
     await message.reply(
         remove_html_tags_except_b(st + prettify_vacancies(vacancies)),
         parse_mode="HTML",
         disable_web_page_preview=True,
-        reply_markup=get_pagination_keyboard(1, 10),
+        reply_markup=get_pagination_keyboard(1, pages),
     )
 
 

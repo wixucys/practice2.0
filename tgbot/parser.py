@@ -27,11 +27,10 @@ async def get_region(city: str):
 
 async def get_vacancies_data(
     query,
-    page: int = 1,
-    per_page: int = 2,
+    per_page: int = 100,
     city: str | None = None,
     salary: int | None = None,
-) -> dict:
+) -> list[dict]:
     # Отключаем проверку SSL
     connector = TCPConnector(ssl=False)
     url = f"https://api.hh.ru/vacancies?per_page={per_page}&text={query}&only_with_salary=true"
@@ -41,9 +40,14 @@ async def get_vacancies_data(
         if city_id := await get_region(city):
             url += f"&area={city_id}"
     async with ClientSession(connector=connector) as session:
-        response = await session.get(url + f"&page={page}")
-        result = await response.json()
-        return result["items"]
+        tasks = [session.get(url + f"&page={page}") for page in range(1, 10)]
+        responses = await asyncio.gather(*tasks)
+        results = [await response.json() for response in responses]
+        all_vacancies = []
+        for result in results:
+            if items := result.get("items"):
+                all_vacancies.extend(items)
+        return all_vacancies
 
 
 # Обработка данных о вакансии
@@ -60,15 +64,29 @@ def process_vacancy_data(vacancy):
             else f"до {salary_to}" if salary_to else "не указана"
         )
 
+# class Vacancy(Base):
+#     __tablename__ = "vacancies"
+
+#     id = Column(Integer, primary_key=True)
+#     hh_id = Column(Integer, primary_key=True, autoincrement=False)
+#     name = Column(String)
+#     city = Column(String)
+#     experience = Column(String)
+#     employment = Column(String)
+#     requirement = Column(String)
+#     responsibility = Column(String)
+#     salary = Column(Integer)
+#     link = Column(String)
+
     return {
-        "id": vacancy["id"],
+        "hh_id": int(vacancy["id"]),
         "name": vacancy["name"],
         "city": vacancy["area"]["name"],
         "experience": vacancy["experience"]["name"],
         "employment": vacancy["employment"]["name"],
-        "requirements": vacancy["snippet"]["requirement"],
-        "responsibilities": vacancy["snippet"]["responsibility"],
-        "salary": salary_info,
+        "requirement": vacancy["snippet"]["requirement"],
+        "responsibility": vacancy["snippet"]["responsibility"],
+        "salary": salary_info.split(' ')[1],
         "link": f"https://hh.ru/vacancy/{vacancy['id']}?from=applicant_recommended&hhtmFrom=main",
     }
 
@@ -78,11 +96,10 @@ async def search_vacancies(
     query: str,
     city: str | None = None,
     salary: int | None = None,
-    page: int = 1,
-    per_page: int = 2,
+    per_page: int = 100,
 ) -> list[dict]:
     vacancies_data = await get_vacancies_data(
-        query, city=city, salary=salary, page=page, per_page=per_page
+        query, city=city, salary=salary, per_page=per_page
     )
     processed_vacancies = []
     for data in vacancies_data:

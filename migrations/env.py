@@ -1,15 +1,15 @@
 from sqlalchemy import engine_from_config, pool
 from logging.config import fileConfig
 
-from tgbot.config import (
+from config import (
     POSTGRES_DB,
     POSTGRES_USER,
     POSTGRES_PASSWORD,
     POSTGRES_PORT,
     POSTGRES_HOST,
 )
-from tgbot.db.models import Vacancy
-from tgbot.db.db import Base
+from db.models import Vacancy
+from db.db import Base
 from alembic import context
 
 # this is the Alembic Config object, which provides
