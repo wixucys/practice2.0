@@ -5,19 +5,6 @@ from db.models import Vacancy
 import re
 
 
-# {
-#         "hh_id": int(vacancy["id"]),
-#         "name": vacancy["name"],
-#         "city": vacancy["area"]["name"],
-#         "experience": vacancy["experience"]["name"],
-#         "employment": vacancy["employment"]["name"],
-#         "requirement": vacancy["snippet"]["requirement"],
-#         "responsibility": vacancy["snippet"]["responsibility"],
-#         "salary": salary_info.split(' ')[1],
-#         "link": f"https://hh.ru/vacancy/{vacancy['id']}?from=applicant_recommended&hhtmFrom=main",
-#     }
-
-
 def prettify_vacancy(vacancy: Vacancy) -> str:
     return f"""\
 <b>{vacancy.name}</b>
@@ -62,14 +49,11 @@ def prettify_vacancies(vacancies) -> str:
     return "\n\n".join(prettify_vacancy(vacancy) for vacancy in vacancies)
 
 
-# def get_params(text: str) -> dict:
-
-
 def get_params(text: str) -> dict:
     text = text.lstrip("/getvacancies").strip()
-    text = text.split(f'\n')
-    pre_list = [item.strip().strip(',') for item in text]
-    params_list = ["query", "city", "salary"][:len(pre_list)]
+    text = text.split(f"\n")
+    pre_list = [item.strip().strip(",") for item in text]
+    params_list = ["query", "city", "salary"][: len(pre_list)]
     pre_list = [str(item).capitalize() for item in pre_list]
     params = zip(params_list, pre_list)
     return dict(params)
@@ -88,19 +72,6 @@ def remove_html_tags_except_b(text: str) -> str:
     # Удаляем все теги, кроме <b> и </b>
     clean_text = re.sub(r"<(?!\/?b\b)[^>]*>", "", text)
     return clean_text
-
-
-# vacancy = {
-#         "id": vacancy["id"],
-#         "name": vacancy["name"],
-#         "city": vacancy["area"]["name"],
-#         "experience": vacancy["experience"]["name"],
-#         "employment": vacancy["employment"]["name"],
-#         "requirements": vacancy["snippet"]["requirement"],
-#         "responsibilities": vacancy["snippet"]["responsibility"],
-#         "salary": salary_info,
-#         "link": f"https://hh.ru/vacancy/{vacancy['id']}?from=applicant_recommended&hhtmFrom=main",
-#     }
 
 
 async def get_vacancies_from_db(

@@ -10,19 +10,18 @@ async def get_region(city: str):
         areas = await areas.json()
         simple_areas = []
         for country in areas:
-            if country['name'] == city:
-                return country['id']
+            if country["name"] == city:
+                return country["id"]
             simple_areas.append({"id": country["id"], "name": country["name"]})
             if country.get("areas"):
                 for region in country["areas"]:
-                    if region['name'] == city:
-                        return region['id']
+                    if region["name"] == city:
+                        return region["id"]
                     simple_areas.append({"id": region["id"], "name": region["name"]})
                     for city_ in region["areas"]:
-                        if city_['name'] == city:
-                            return city_['id']
+                        if city_["name"] == city:
+                            return city_["id"]
                         simple_areas.append({"id": city_["id"], "name": city_["name"]})
-
 
 
 async def get_vacancies_data(
@@ -64,20 +63,6 @@ def process_vacancy_data(vacancy):
             else f"до {salary_to}" if salary_to else "не указана"
         )
 
-# class Vacancy(Base):
-#     __tablename__ = "vacancies"
-
-#     id = Column(Integer, primary_key=True)
-#     hh_id = Column(Integer, primary_key=True, autoincrement=False)
-#     name = Column(String)
-#     city = Column(String)
-#     experience = Column(String)
-#     employment = Column(String)
-#     requirement = Column(String)
-#     responsibility = Column(String)
-#     salary = Column(Integer)
-#     link = Column(String)
-
     return {
         "hh_id": int(vacancy["id"]),
         "name": vacancy["name"],
@@ -86,7 +71,7 @@ def process_vacancy_data(vacancy):
         "employment": vacancy["employment"]["name"],
         "requirement": vacancy["snippet"]["requirement"],
         "responsibility": vacancy["snippet"]["responsibility"],
-        "salary": salary_info.split(' ')[1],
+        "salary": salary_info.split(" ")[1],
         "link": f"https://hh.ru/vacancy/{vacancy['id']}?from=applicant_recommended&hhtmFrom=main",
     }
 
